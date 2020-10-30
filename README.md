@@ -369,7 +369,8 @@ In order to run the project inside docker, you need to make sure to install `doc
 2. Update the `./master-images/mule-runtime-base/license.lic` file with your license.
 3. Update `create-mule-runtime-image.sh` with the required NEXUS username and password. Make sure it is executable
 4. Run the script: `$ ./create-mule-runtime-image.sh`.
-5. Create your metrics app using the command: `$ docker-compose up -d`.
+5. Make sure to build the project at least once using maven or Studio in order to make sure that `/target` is populated with jar file.
+6. Create your metrics app using the command: `$ docker-compose up -d`.
 
 You can manage the lifecycle of your metrics app using docker-compose.
 
