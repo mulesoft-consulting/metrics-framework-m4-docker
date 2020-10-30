@@ -1,0 +1,1 @@
+This is the folder where the jar application has to be placed in order to be deploye in the Mule Runtime Dockeraized
