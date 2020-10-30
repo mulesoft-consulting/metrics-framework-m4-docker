@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  metrics_app:
+    container_name: metrics-container
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: metrics
+        BASE_RUNTIME_IMAGE: ${DOCKER_PREFIX}/mule-runtime-4.3.0
+    environment: 
+      ANYPOINT_USERNAME: ${ANYPOINT_USERNAME}
+      ANYPOINT_PASSWORD: ${ANYPOINT_PASSWORD}
+      ANYPOINT_ORG_NAME: ${ANYPOINT_ORG_NAME}
+      ANYPOINT_ENV_NAME: ${ANYPOINT_ENV_NAME}
+      SERVER_NAME: ${SERVER_NAME}
+      TARGET_TYPE: ${TARGET_TYPE}
+      TARGET_NAME: ${TARGET_NAME}
+    ports: 
+      - "${METRICS_APP_PORT}:8081"
+    restart: unless-stopped
