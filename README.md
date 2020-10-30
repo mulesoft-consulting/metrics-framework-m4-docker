@@ -19,6 +19,8 @@ Table of Contents
             * [Properties specific for Splunk](#properties-specific-for-splunk)
          * [ELK steps](#elk-steps)
             * [Properties specific for ELK](#properties-specific-for-elk)
+         * [Docker](#docker)
+            * [Container Execution Parameters](#container-execution-parameters)
       * [Considerations](#considerations)
       * [Some Theory around the Framework](#some-theory-around-the-framework)
          * [Business Needs](#business-needs)
@@ -358,6 +360,34 @@ elk.user | Elasticsearch username  |
 elk.password | Elasticsearch password |
 elk.index.metrics | Index for storing Platform operational metrics | metrics
 elk.index.benefits | Index for storing Platform benefits | platformbenefits
+
+### Docker
+
+In order to run the project inside docker, you need to make sure to install `docker` and `docker-compose`.
+
+1. Make a copy of env.example and rename it to `.env`. Fill `.env` file with the required variables following container execution parameters.
+2. Update the `./master-images/mule-runtime-base/license.lic` file with your license.
+3. Update `create-mule-runtime-image.sh` with the required NEXUS username and password. Make sure it is executable
+4. Run the script: `$ ./create-mule-runtime-image.sh`.
+5. Create your metrics app using the command: `$ docker-compose up -d`.
+
+You can manage the lifecycle of your metrics app using docker-compose.
+
+#### Container Execution Parameters
+
+Parameter | Required | Description
+------------ | ------------ | ------------
+ANYPOINT_USERNAME | True | Anypoint Platform Username used to obtain a login token to perform multiiple tasks using Anypoint Platform APIs 
+ANYPOINT_PASSWORD | True | Anypoint Platform Password used to obtain a login token to perform multiiple tasks using Anypoint Platform APIs  
+ANYPOINT_ORG_NAME | True | The name of the Anypoint Platform Organization / Business Group for the server registration 
+ANYPOINT_ENV_NAME | True | The name of the Anypoint Platform Environment for the server registration 
+TARGET_TYPE | True | The type of target to be created, options: server and serverGroup (for horizontal scalability). **Default** value is **server**
+TARGET_NAME | True | In the case of using Server Groups, this value is required, and it represents the name of the server group to be created or to join as part of the container startup tasks | 
+APP_NAME | True | Name of the application for the Runtime Manager UI
+MAX_RAM | True | Max RAM memory to be used by the JVM (Young + Old generation + Meta), this is not only for the heap, reference: [JVM Settings for containers](https://developers.redhat.com/blog/2017/04/04/openjdk-and-containers/)
+APP_PROPS | False | Optional additional deployment properties to be applied at application level
+WRAPPER_PROPS | False | Optional additional properties to be applied at system level (wrapper.conf)
+
 
 ## Considerations
 
